@@ -20,7 +20,6 @@ from flask_admin import Admin # type: ignore
 from flask_admin.contrib.sqla import ModelView # type: ignore
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user # type: ignore
 from flask_migrate import Migrate # type: ignore
-from .game import playing # type: ignore
 
 def init_apps(app):
     ckeditor = CKEditor(app)
