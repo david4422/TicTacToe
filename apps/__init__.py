@@ -5,7 +5,7 @@ import secrets
 
 db = SQLAlchemy()
 migrate = Migrate()
-print("david and dana")
+print("starting app")
 def create_app():
     app = Flask(__name__, static_folder='static')    
     app.config['SECRET_KEY'] = secrets.token_hex(16)
