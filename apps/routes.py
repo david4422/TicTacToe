@@ -1,6 +1,6 @@
 import secrets
 from datetime import date
-from flask import Flask, abort, render_template, redirect, url_for, flash, request # type: ignore
+from flask import Flask, abort, render_template, redirect, url_for, flash, request, jsonify # type: ignore
 from flask_bootstrap import Bootstrap5 # type: ignore
 from flask_ckeditor import CKEditor # type: ignore
 from flask_gravatar import Gravatar # type: ignore
@@ -88,7 +88,12 @@ def init_apps(app):
     
 
     ########################################################## game ##########################################################
-
+    from . import board
+    from . import player
+    b = board.Board()
+    pl1 = player.Player("X", b)
+    pl2 = player.Player("O", b)
+    game_over = False
 
 
     @app.route('/')
@@ -98,10 +103,59 @@ def init_apps(app):
     
 
     @app.route('/game')
+    @login_required
     def game():
-        # playing()
+        b.locations = [" "," "," "," "," "," "," "," "," "]
+        b.change_board()
         return render_template('game.html')
     
-    with app.app_context():
+
+    @app.route('/pl1_move', methods=['POST'])
+    def pl1_move():
+        i =  int(request.form.get('index'))
+        print(f"Received index: {i}")
+        finish = pl1.make_move(i)
+        if finish:
+            game_over = True
+            return jsonify({'status': game_over, 'winner': pl1.type})
+        elif " " not in b.locations:
+            game_over = True
+            return jsonify({'status': game_over, 'winner': "No one"})
+        else:
+            game_over = False
+            return jsonify({'status': game_over, 'winner': None})
+
+
         
+
+        
+        
+    @app.route('/pl2_move', methods=['POST'])
+    def pl2_move():
+        if game_over:
+            return "ok"
+        index = pl2.board.AI_put(pl2.type)
+
+        if pl2.AI_move():
+            return jsonify({
+                'status' : True,
+                'winner' : pl2.type,
+                'index' : index
+                })
+        if " " not in b.locations:
+            return jsonify({
+                'status' : True,
+                'winner' : "No one",
+                'index' : index
+                })
+        return jsonify({
+            'index' : index
+            })
+    
+    @app.route('/game_finished/<winner>')
+    def game_finished(winner):
+        return render_template('game_finished.html', winner=winner)
+
+
+    with app.app_context():
         db.create_all()

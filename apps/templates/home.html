@@ -8,14 +8,16 @@
     <br>
     <h1 class="text-center">Lets see if you can beat me</h1>
     <br>
-    <h1 class="text-center">First login as a guest</h1>
 
     {% if current_user.is_authenticated %}
         <div class="text-center mt-4">
             <a href="/logout" class="btn-custom">Logout</a>
+            <a href="/game" class="btn-custom">Play</a>
         </div>
     {% else %}
         <div class="text-center mt-4">
+            <h1 class="text-center">First login as a guest</h1>
+            <br>
             <a href="/login" class="btn-custom">Login</a>
         </div>
     {% endif %}

@@ -28,15 +28,43 @@
     </div>
 
     <Script>
-        function handleClick(index) {
-            let cell = document.querySelector(`.cell[data-index="${index}"]`);
-            
-            // הנחת ה-X
-            cell.innerHTML = '<span style="font-size: 30px; font-weight: bold; color: black;">X</span>';
-            
-            // עדכון הסטטוס
-            updateStatus();
+        function resetGame() {
+            fetch('/game', { method: "POST" })
+            window.location.reload();
         }
+        function handleClick(index) {
+            // דבר ראשון: הוספת "X" ל-HTML במקום הנכון
+            const cell = document.querySelector(`[data-index="${index}"]`);
+            if (cell) {
+                cell.textContent = "X";
+                cell.style.fontSize = "2rem";  // להגדיל את ה-X
+                cell.style.fontWeight = "bold";  // להפוך לבולד
+                cell.style.color = "black";  // להפוך לשחור
+            }
+            updateStatus()
+            // שליחת הבקשה ל-Flask עם האינדקס
+            fetch('/pl1_move', {
+                method: 'POST',
+                body: new URLSearchParams({ index: index }),
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+            .then(response => response.json())  // קבלת תשובת JSON מהשרת
+            .then(data => {
+                // בדיקה אם המשחק הסתיים
+                if (data.status === true) {  // שים לב ל- true הקטן
+                    window.location.href = `/game_finished/${data.winner}`;
+                } else {
+                    computer()
+                }
+            })
+            .catch(error => console.error('Error:', error));
+            
+        }
+            
+
+        
         
         function updateStatus() {
             let status = document.getElementById('status');
@@ -48,6 +76,35 @@
                 status.innerHTML = "Player X's turn";
             }
         }
+
+        function computer() {
+            fetch('/pl2_move', { method: "POST" })  // שולחים בקשה ל-Flask
+                .then(response => response.json())  // מקבלים תשובה בפורמט JSON
+                .then(data => {
+                    const index = data.index;  // מקבלים את ה-index שנשלח מ-Flask
+                    
+                    // מחפשים את הדיב המתאים עם data-index שווה ל-index
+                    const cell = document.querySelector(`.cell[data-index="${index}"]`);
+                    
+                    if (cell) {
+                        // עדכון התוכן של הדיב ל-"O"
+                        cell.textContent = "O";
+                        cell.style.fontWeight = "bold";  // אם רוצים להדגיש
+                        cell.style.color = "red";  // אם רוצים צבע טקסט שחור
+                    }
+                    if (data.status == true) {
+                        window.location.href = `/game_finished/${data.winner}`;
+                    }
+                    else {
+                        console.log("Not finished yet");
+                    }
+                })
+            .catch(error => console.error("Error:", error));
+        }
+        
+        
+
+        
     </script>
 </body>
 </html>

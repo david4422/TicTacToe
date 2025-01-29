@@ -1,0 +1,57 @@
+{% include 'header.html' %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" >
+    <title>Game Finished</title>
+    <style>
+        /* הוספת מחלקה ייחודית לכל דף כדי להחיל את הסטייל רק על האלמנטים הרצויים */
+        .game-finished {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .game-finished .container {
+            text-align: center;
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .game-finished h1 {
+            font-size: 3rem;
+            color: #333;
+        }
+        .game-finished h2 {
+            font-size: 2rem;
+            color: #ff6600;
+            margin-top: 10px;
+        }
+        .game-finished a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            color: white;
+            background-color: #2a5298;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .game-finished a:hover {
+            background-color: #1e3c72;
+        }
+    </style>
+</head>
+
+<div class="game-finished">
+<div class="container">
+    <h1>Game Finished</h1>
+    <h2>{{ winner }} wins!</h2>
+    <a href="/game">Play again</a>
+</div>
+</div>

@@ -1,108 +1,100 @@
 import random
 class Board:
     def __init__(self):
-        self.locations = [[" " for _ in range(3)] for _ in range(3)]
+        self.locations = [" "," "," "," "," "," "," "," "," ",]
         self.create_board()
     
   
     def create_board(self):
-        for i, row in enumerate(self.locations):
-            row_display = " | ".join(f" {cell} " for cell in row)
-            print(row_display)
+        board = [self.locations[i:i+3] for i in range(0, len(self.locations), 3)]  # חותך את הליסט לשורות של 3 ערכים כל אחת
+        for row in board:
+            print(f" {row[0]} | {row[1]} | {row[2]} ")# אם זו לא השורה האחרונה
+            print("---|---|---")
         
-        # הדפסת קו מפריד בין השורות, חוץ מהאחרון
-            if i < len(self.locations) - 1:
-                print("-" * (len(row_display)))
+
 
     
-    def put(self, type):
-        row = int(input("Enter the location: row "))
-        col = int(input("Enter the location: col "))
-        if row in range(3) and col in range(3) and self.locations[row][col] == " ":
-            self.locations[row][col] = type
-        else:
-            print("Cell is not available")
-            self.change_board()
-            self.put(type)
-    
+    def put(self, type, index):
+        self.locations[index] = type
+ 
 
     def AI_put(self, type):
         print("AI is thinking...")
-        self.change_board()
-
 
                 # רשימה של כל הקומבינציות המנצחות: שורות, עמודות ואלכסונים
         win_patterns = [
             # שורות
-            [(0, 0), (0, 1), (0, 2)],
-            [(1, 0), (1, 1), (1, 2)],
-            [(2, 0), (2, 1), (2, 2)],
+            [0,1,2],
+            [3,4,5],
+            [6,7,8],
             
             # עמודות
-            [(0, 0), (1, 0), (2, 0)],
-            [(0, 1), (1, 1), (2, 1)],
-            [(0, 2), (1, 2), (2, 2)],
+            [0,3,6],
+            [1,4,7],
+            [2,5,8],
             
             # אלכסונים
-            [(0, 0), (1, 1), (2, 2)],
-            [(0, 2), (1, 1), (2, 0)]
+            [0,4,8],
+            [2,4,6]
         ]        # בדיקה אם אחת הקומבינציות מכילה שלושה ערכים זהים (שאינם ריקים)
         for pattern in win_patterns:
-            a, b, c = pattern  # מפרק כל שילוב לשלושה תאים
-            if self.locations[a[0]][a[1]] == self.locations[b[0]][b[1]] and self.locations[a[0]][a[1]] == "O" and self.locations[c[0]][c[1]] == " ":
+            if self.locations[pattern[0]] == self.locations[pattern[1]] and self.locations[pattern[0]] == "O" and self.locations[pattern[2]] == " ":
                     print("im winning you!!")
-                    self.locations[c[0]][c[1]] = type
-                    return
-            if self.locations[a[0]][a[1]] == self.locations[c[0]][c[1]] and self.locations[a[0]][a[1]] == "O" and self.locations[b[0]][b[1]] == " ":
+                    self.locations[pattern[2]] = type
+                    squer_index = pattern[2]
+                    return squer_index
+            if self.locations[pattern[0]] == self.locations[pattern[2]] and self.locations[pattern[0]] == "O" and self.locations[pattern[1]] == " ":
                     print("im winning you!!")
-                    self.locations[b[0]][b[1]] = type
-                    return
-            if self.locations[b[0]][b[1]] == self.locations[c[0]][c[1]] and self.locations[b[0]][b[1]] == "O" and self.locations[a[0]][a[1]] == " ":
+                    self.locations[pattern[1]] = type
+                    squer_index = pattern[1]
+                    return squer_index
+            if self.locations[pattern[1]] == self.locations[pattern[2]] and self.locations[pattern[1]] == "O" and self.locations[pattern[0]] == " ":
                     print("im winning you!!")
-                    self.locations[a[0]][a[1]] = type
-                    return
+                    self.locations[pattern[0]] = type
+                    squer_index = pattern[0]
+                    return squer_index
         for pattern in win_patterns:
-            a, b, c = pattern  # מפרק כל שילוב לשלושה תאים
-            if self.locations[a[0]][a[1]] == self.locations[b[0]][b[1]] and self.locations[a[0]][a[1]] != " " and self.locations[c[0]][c[1]] == " ":
+            if self.locations[pattern[0]] == self.locations[pattern[1]] and self.locations[pattern[0]] == "X" and self.locations[pattern[2]] == " ":
                     print("im blocking you!!")
-                    self.locations[c[0]][c[1]] = type
-                    return
-            if self.locations[a[0]][a[1]] == self.locations[c[0]][c[1]] and self.locations[a[0]][a[1]] != " " and self.locations[b[0]][b[1]] == " ":
+                    self.locations[pattern[2]] = type
+                    squer_index = pattern[2]
+                    return squer_index
+            if self.locations[pattern[0]] == self.locations[pattern[2]] and self.locations[pattern[0]] == "X" and self.locations[pattern[1]] == " ":
                     print("im blocking you!!")
-                    self.locations[b[0]][b[1]] = type
-                    return
-            if self.locations[b[0]][b[1]] == self.locations[c[0]][c[1]] and self.locations[b[0]][b[1]] != " " and self.locations[a[0]][a[1]] == " ":
+                    self.locations[pattern[1]] = type
+                    squer_index = pattern[1]
+                    return squer_index
+            if self.locations[pattern[1]] == self.locations[pattern[2]] and self.locations[pattern[1]] == "X" and self.locations[pattern[0]] == " ":
                     print("im blocking you!!")
-                    self.locations[a[0]][a[1]] = type
-                    return
+                    self.locations[pattern[0]] = type
+                    squer_index = pattern[0]
+                    return squer_index
             
 
-        if self.locations[1][1] == " ":
+        if self.locations[4] == " ":
             print("im centering you!!")
-            self.locations[1][1] = type
-            return
+            self.locations[4] = type
+            squer_index = 4
+            return squer_index
         
-        if self.locations[0][0] == " " or self.locations[0][2] == " " or self.locations[2][0] == " " or self.locations[2][2] == " ":
+        if self.locations[0] == " " or self.locations[2] == " " or self.locations[6] == " " or self.locations[8] == " ":
             print ("i will go on the corners")
-            row = random.choice([0, 2])
-            col = random.choice([0, 2])
-            while self.locations[row][col] != " ":
-                row = random.choice([0, 2])
-                col = random.choice([0, 2])
-            self.locations[row][col] = type
-            return
+            index = random.choice([0, 2, 6, 8])            
+            while self.locations[index] != " ":
+                index = random.choice([0, 2, 6, 8])           
+            self.locations[index] = type
+            squer_index = index
+            return squer_index
             
-
-        row = random.randint(0, 2)
-        col = random.randint(0, 2)
-        print(f"AI chose row {row} and col {col}")
-        if self.locations[row][col] == " ":
-            self.locations[row][col] = type
-            return
         else:
-            print("Cell is not available")
-            self.change_board()
-            self.AI_put(type)
+            index = random.choice([1, 3, 5, 7])            
+            print(f"AI chose index {index}")
+            while self.locations[index] != " ":
+                index = random.choice([1, 3, 5, 7])            
+            self.locations[index] = type
+            squer_index = index
+            return squer_index
+        
 
     
     def change_board(self):
@@ -112,29 +104,25 @@ class Board:
                 # רשימה של כל הקומבינציות המנצחות: שורות, עמודות ואלכסונים
         win_patterns = [
             # שורות
-            [(0, 0), (0, 1), (0, 2)],
-            [(1, 0), (1, 1), (1, 2)],
-            [(2, 0), (2, 1), (2, 2)],
+            [0,1,2],
+            [3,4,5],
+            [6,7,8],
             
             # עמודות
-            [(0, 0), (1, 0), (2, 0)],
-            [(0, 1), (1, 1), (2, 1)],
-            [(0, 2), (1, 2), (2, 2)],
+            [0,3,6],
+            [1,4,7],
+            [2,5,8],
             
             # אלכסונים
-            [(0, 0), (1, 1), (2, 2)],
-            [(0, 2), (1, 1), (2, 0)]
+            [0,4,8],
+            [2,4,6]
         ]
         game_finish = False
         # בדיקה אם אחת הקומבינציות מכילה שלושה ערכים זהים (שאינם ריקים)
         for pattern in win_patterns:
-            a, b, c = pattern  # מפרק כל שילוב לשלושה תאים
-            if self.locations[a[0]][a[1]] == self.locations[b[0]][b[1]] == self.locations[c[0]][c[1]] != " ":
+            if self.locations[pattern[0]] == self.locations[pattern[1]] == self.locations[pattern[2]] and self.locations[pattern[0]] != " ":
                 print (f"{type} wins!")
                 game_finish = True
                 return game_finish
-        if not any(" " in row for row in self.locations):
-            print("Game over No one wins")
-            game_finish = True
         return game_finish
 
