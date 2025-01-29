@@ -1,0 +1,15 @@
+{% include "header.html" %}
+
+<head>
+        {% from "bootstrap5/form.html" import render_form %}
+      <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="static/css/login.css">
+</head>
+<body>
+    <form action="/login" method="POST" class="text-center  w-20 mx-auto h1" style="color: purple;">
+        {{ render_form(form) }}
+    </form>
+</body>
+</html>

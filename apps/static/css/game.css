@@ -1,0 +1,72 @@
+.center-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    width: 80%; /* קובע את הרוחב */
+    max-width: 1000px; /* מונע שהקופסה תהיה רחבה מדי */
+    padding: 30px;
+    
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color: #ffffff;
+    text-align: center;
+    
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+h1 {
+    color: orange;
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+p {
+    color: orange;
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+body {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    gap: 5px;
+    margin: 20px auto;
+    width: 315px;
+}
+
+.cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 100px;
+    font-size: 2em;
+    background-color: white;
+    border: 2px solid black;
+    cursor: pointer;
+}
+
+.cell:hover {
+    background-color: #e0e0e0;
+}
+
+button {
+    padding: 10px 20px;
+    margin-top: 10px;
+    cursor: pointer;
+    color: orange;
+    font-size: 2rem;
+    margin-bottom: 10px;
+
+}

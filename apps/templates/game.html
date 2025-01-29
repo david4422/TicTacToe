@@ -1,0 +1,53 @@
+{% include 'header.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="static/css/game.css">    
+</head>
+<body>
+    <div class="center-container">
+            <h1>Game</h1>
+            <h1>Tic Tac Toe</h1>
+        <div class="board" id="board">
+            <div class="cell" data-index="0" role="button" onclick="handleClick(0)"></div>
+            <div class="cell" data-index="1" role="button" onclick="handleClick(1)"></div>
+            <div class="cell" data-index="2" role="button" onclick="handleClick(2)"></div>
+            <div class="cell" data-index="3" role="button" onclick="handleClick(3)"></div>
+            <div class="cell" data-index="4" role="button" onclick="handleClick(4)"></div>
+            <div class="cell" data-index="5" role="button" onclick="handleClick(5)"></div>
+            <div class="cell" data-index="6" role="button" onclick="handleClick(6)"></div>
+            <div class="cell" data-index="7" role="button" onclick="handleClick(7)"></div>
+            <div class="cell" data-index="8" role="button" onclick="handleClick(8)"></div>
+        </div>
+        <p id="status">Player X's turn</p>
+        <button onclick="resetGame()" id="reset">Restart</button>
+    </div>
+
+    <Script>
+        function handleClick(index) {
+            let cell = document.querySelector(`.cell[data-index="${index}"]`);
+            
+            // הנחת ה-X
+            cell.innerHTML = '<span style="font-size: 30px; font-weight: bold; color: black;">X</span>';
+            
+            // עדכון הסטטוס
+            updateStatus();
+        }
+        
+        function updateStatus() {
+            let status = document.getElementById('status');
+            
+            // אם הסטטוס כרגע הוא תור של X, משנה אותו ל-O ולהפך
+            if (status.innerHTML.includes("X")) {
+                status.innerHTML = "Player O's turn";
+            } else {
+                status.innerHTML = "Player X's turn";
+            }
+        }
+    </script>
+</body>
+</html>

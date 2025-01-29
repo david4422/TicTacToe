@@ -1,0 +1,22 @@
+body {
+    background-color: #f8f9fa;
+}
+h1{
+    color: purple;
+    font-weight: bold;
+}
+.nav-link {
+    font-size: 18px;
+    font-weight: 500;
+}
+.btn-custom {
+    background-color: purple;
+    color: white;
+    border-radius: 5px;
+    padding: 10px 20px;
+    text-decoration: none;
+}
+.btn-custom:hover {
+    background-color: darkviolet;
+    text-decoration: none;
+}

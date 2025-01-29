@@ -1,0 +1,51 @@
+.flashes {
+    margin-top: 10px;
+}
+.alert {
+    margin-top: 20px;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+
+/* עיצוב הפורם */
+form {
+    display: flex;
+    flex-direction: column; /* כל האלמנטים יהיו בעמודה */
+    align-items: center; /* ליישר את כל האלמנטים במרכז */
+    width: 300px; /* קביעת רוחב אחיד */
+    margin: 0 auto; /* למרכז את הפורם בדף */
+}
+
+label {
+    margin: 10px 0 5px; /* מרווח בין הלייבל לשדה */
+    font-weight: bold;
+}
+
+input, select, button {
+    width: 100%; /* כל השדות יהיו ברוחב 100% מהפורם */
+    padding: 10px;
+    margin-bottom: 10px; /* מרווח בין השדות */
+    border: 1px solid #ccc; /* גבול לשדות */
+    border-radius: 5px; /* קימור פינות */
+    font-size: 14px; /* גודל גופן אחיד */
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049; /* שינוי צבע כפתור כשעובר מעליו */
+}
