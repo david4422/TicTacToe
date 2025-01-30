@@ -1,6 +1,8 @@
 # TicTacToe
 TicTacToe Game
 <br>
+written with Python Flask
+<br>
 You play agains a computer AI:)
 <br>
 you must be a member to play the game!
